@@ -79,6 +79,18 @@ class InterfazClasificacion:
                                  width=25, height=2)
         boton_volver.place(x=300, y=400)
 
+    def registrar_usuario_cliente(self):
+        self.registrar_usuario("Commons/usuarios.txt")
+
+    def iniciar_sesion_cliente(self):
+        self.iniciar_sesion("Commons/usuarios.txt", abrir_tienda)
+
+    def entrar_sin_sesion(self):
+        # Oculta la ventana principal
+        self.root.withdraw()
+        # Abre la ventana de la tienda sin necesidad de autenticación
+        abrir_tienda(self.root)
+
     def abrir_ventana_operador(self):
         # Limpiar widgets de la ventana principal
         for widget in self.root.winfo_children():
@@ -120,9 +132,6 @@ class InterfazClasificacion:
                                  width=25, height=2)
         boton_volver.place(x=300, y=350)
 
-    def registrar_usuario_cliente(self):
-        self.registrar_usuario("Commons/usuarios.txt")
-
     def registrar_usuario_operador(self):
         self.registrar_usuario("Commons/operadores.txt")
 
@@ -145,12 +154,6 @@ class InterfazClasificacion:
 
         messagebox.showinfo("Registro", "Usuario registrado correctamente")
 
-    def iniciar_sesion_cliente(self):
-        self.iniciar_sesion("Commons/usuarios.txt", abrir_tienda)
-
-    def iniciar_sesion_operador(self):
-        self.iniciar_sesion("Commons/operadores.txt", abrir_clasificador)
-
     def iniciar_sesion(self, ruta_archivo, funcion_abrir):
         usuario = self.usuario_entry.get()
         contrasena = self.contrasena_entry.get()
@@ -171,6 +174,3 @@ class InterfazClasificacion:
 
         # Mostrar mensaje de error si las credenciales no coinciden
         messagebox.showerror("Error", "Usuario o contraseña incorrectos")
-
-    def entrar_sin_sesion(self):
-        print("Entrando sin iniciar sesión")
