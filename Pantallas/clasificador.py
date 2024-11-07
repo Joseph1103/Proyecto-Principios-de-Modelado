@@ -35,27 +35,6 @@ def abrir_clasificador(root):
     boton_cerrar.pack(pady=20)
 
 
-def abrir_ventana_clasificador(parent, root):
-    # Cierra la ventana principal del clasificador
-    parent.withdraw()
-
-    # Crear una nueva ventana para la funcionalidad de Clasificador
-    ventana_clasificador = tk.Toplevel(root)
-    ventana_clasificador.title("Ventana Clasificador")
-    ventana_clasificador.geometry("800x600")
-    ventana_clasificador.configure(bg="#FCC509")
-
-    # Etiqueta de título
-    label = tk.Label(ventana_clasificador, text="Ventana Clasificador", font=("Arial", 22), bg="#FCC509", fg="black")
-    label.pack(pady=50)
-
-    # Botón para volver a la ventana del clasificador
-    boton_volver = tk.Button(ventana_clasificador, text="Volver",
-                             command=lambda: regresar_al_clasificador(ventana_clasificador, parent),
-                             bg="white", fg="#B90518", width=25, height=2)
-    boton_volver.pack(pady=20)
-
-
 def abrir_ventana_bom(parent, root):
     # Cierra la ventana principal del clasificador
     parent.withdraw()
@@ -184,10 +163,102 @@ def abrir_ventana_bom(parent, root):
                                height=2)
     boton_producir.pack(pady=10)
 
+    # Botón para abrir la ventana de Almacén
+    boton_almacen = tk.Button(ventana_bom, text="Almacén", command=lambda: abrir_almacen(ventana_bom, root),
+                              bg="white", fg="#B90518", width=15, height=2)
+    boton_almacen.pack(pady=10)
+
     # Botón para volver a la ventana del clasificador
     boton_volver = tk.Button(ventana_bom, text="Volver", command=lambda: regresar_al_clasificador(ventana_bom, parent),
                              bg="white", fg="#B90518", width=15, height=1)
     boton_volver.pack(pady=10)
+
+
+def abrir_almacen(parent, root):
+    # Cierra la ventana BOM
+    parent.withdraw()
+
+    # Crear una nueva ventana para la funcionalidad de Almacén
+    ventana_almacen = tk.Toplevel(root)
+    ventana_almacen.title("Almacén")
+    ventana_almacen.geometry("800x600")
+    ventana_almacen.configure(bg="#FCC509")
+
+    # Título de la ventana Almacén
+    label = tk.Label(ventana_almacen, text="Inventario de Almacén", font=("Arial", 22), bg="#FCC509", fg="black")
+    label.pack(pady=20)
+
+    # Ruta al archivo de inventario
+    ruta_inventario = os.path.join("Commons", "inventario.json")
+
+    # Cargar el inventario
+    try:
+        with open(ruta_inventario, "r") as inv_file:
+            inventario = json.load(inv_file)
+    except (FileNotFoundError, json.JSONDecodeError):
+        messagebox.showerror("Error", "No se pudo cargar el archivo de inventario.")
+        ventana_almacen.destroy()
+        parent.deiconify()
+        return
+
+    # Frame para mostrar el inventario en una tabla
+    frame = tk.Frame(ventana_almacen, bg="#FCC509")
+    frame.pack(pady=10)
+
+    # Columnas de la tabla
+    tk.Label(frame, text="Código", font=("Arial", 12, "bold"), bg="white", fg="black", width=15).grid(row=0, column=0,
+                                                                                                      padx=5, pady=5)
+    tk.Label(frame, text="Cantidad", font=("Arial", 12, "bold"), bg="white", fg="black", width=15).grid(row=0, column=1,
+                                                                                                        padx=5, pady=5)
+    tk.Label(frame, text="Modificar", font=("Arial", 12, "bold"), bg="white", fg="black", width=15).grid(row=0,
+                                                                                                         column=2,
+                                                                                                         padx=5, pady=5)
+
+    # Mostrar cada item del inventario con una entrada para modificar la cantidad
+    entry_widgets = {}
+    for i, (codigo, cantidad) in enumerate(inventario.items(), start=1):
+        tk.Label(frame, text=codigo, font=("Arial", 12), bg="white", fg="black", width=15).grid(row=i, column=0, padx=5,
+                                                                                                pady=5)
+        cantidad_label = tk.Label(frame, text=str(cantidad), font=("Arial", 12), bg="white", fg="black", width=15)
+        cantidad_label.grid(row=i, column=1, padx=5, pady=5)
+        entry = tk.Entry(frame, font=("Arial", 12), width=15)
+        entry.grid(row=i, column=2, padx=5, pady=5)
+        entry_widgets[codigo] = (cantidad_label, entry)
+
+    # Función para actualizar el inventario
+    def actualizar_inventario():
+        for codigo, (cantidad_label, entry) in entry_widgets.items():
+            # Verifica que el campo no esté vacío antes de intentar actualizar
+            if entry.get().strip():  # Si el campo no está vacío
+                try:
+                    ajuste = int(entry.get())  # Convierte el ajuste a entero
+                    inventario[codigo] += ajuste  # Suma o resta la cantidad en inventario
+                    cantidad_label.config(text=str(inventario[codigo]))  # Actualiza la etiqueta de cantidad
+                    entry.delete(0, tk.END)  # Limpia el campo de entrada
+                except ValueError:
+                    messagebox.showerror("Error", f"Ingrese un número válido para {codigo}")
+                    return
+
+        # Guardar el inventario actualizado en el archivo JSON
+        with open(ruta_inventario, "w") as inv_file:
+            json.dump(inventario, inv_file)
+
+        messagebox.showinfo("Inventario Actualizado", "El inventario ha sido actualizado correctamente.")
+
+    # Botón para aplicar los cambios al inventario
+    boton_actualizar = tk.Button(ventana_almacen, text="Actualizar Inventario", command=actualizar_inventario,
+                                 bg="green", fg="white", width=20, height=2)
+    boton_actualizar.pack(pady=10)
+
+    # Botón para volver a la ventana de BOM
+    boton_volver = tk.Button(ventana_almacen, text="Volver", command=lambda: regresar_al_bom(ventana_almacen, parent),
+                             bg="white", fg="#B90518", width=15, height=1)
+    boton_volver.pack(pady=10)
+
+
+def regresar_al_bom(ventana_actual, ventana_bom):
+    ventana_actual.destroy()  # Cierra la ventana actual (Almacén)
+    ventana_bom.deiconify()  # Vuelve a mostrar la ventana BOM
 
 
 def regresar_al_clasificador(ventana_actual, clasificador_ventana):
