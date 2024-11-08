@@ -1,0 +1,8 @@
+Tomates,1500,19
+Papas,1000,23
+Lata 400g,1500,30
+Lata 1Kg,2000,25
+Envase 500ml,1500,15
+Envase 1L,2000,30
+chips 200g,400,50
+chips 500g,800,40

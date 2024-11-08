@@ -1,6 +1,8 @@
 import tkinter as tk
 from tkinter import messagebox
+import json
 import os
+from datetime import datetime
 from Pantallas.tienda import abrir_tienda  # Importamos la función de tienda.py
 from Pantallas.clasificador import abrir_clasificador  # Importamos la función de clasificador.py
 
@@ -127,10 +129,10 @@ class InterfazClasificacion:
         self.registrar_usuario("Commons/operadores.txt")
 
     def iniciar_sesion_cliente(self):
-        self.iniciar_sesion("Commons/usuarios.txt", abrir_tienda)
+        self.iniciar_sesion("Commons/usuarios.txt", abrir_tienda, usuario_tipo="cliente", estado=0)
 
     def iniciar_sesion_operador(self):
-        self.iniciar_sesion("Commons/operadores.txt", abrir_clasificador)
+        self.iniciar_sesion("Commons/operadores.txt", abrir_clasificador, usuario_tipo="operador", estado=0, guardar=False)
 
     def registrar_usuario(self, ruta_archivo):
         usuario = self.usuario_entry.get()
@@ -151,29 +153,40 @@ class InterfazClasificacion:
 
         messagebox.showinfo("Registro", "Usuario registrado correctamente")
 
-    def iniciar_sesion(self, ruta_archivo, funcion_abrir):
+    def iniciar_sesion(self, ruta_archivo, funcion_abrir, usuario_tipo, estado, guardar=True):
         usuario = self.usuario_entry.get()
         contrasena = self.contrasena_entry.get()
 
-        # Verifica si el archivo existe y el usuario y contraseña están registrados
         if not os.path.exists(ruta_archivo):
             messagebox.showerror("Error", "No hay usuarios registrados.")
             return
 
-        # Verifica el usuario y contraseña
         with open(ruta_archivo, "r") as archivo:
             for linea in archivo:
                 usuario_registrado, contrasena_registrada = linea.strip().split(",")
                 if usuario == usuario_registrado and contrasena == contrasena_registrada:
+                    if guardar:
+                        self.guardar_usuario_json(usuario)  # Guarda solo si `guardar=True`
+                    print(f"Estado actual: {estado}")  # Usar estado temporalmente
                     self.root.withdraw()  # Oculta la ventana principal
-                    funcion_abrir(self.root)  # Llama a la función para abrir la ventana correspondiente
+                    funcion_abrir(self.root)
                     return
+
 
         # Mostrar mensaje de error si las credenciales no coinciden
         messagebox.showerror("Error", "Usuario o contraseña incorrectos")
 
     def entrar_sin_sesion(self):
-        # Oculta la ventana principal
+        estado = 1  # Definir estado como 1 cuando entra sin usuario
+        self.guardar_usuario_json("sin_usuario")  # Guardar en JSON solo con "sin_usuario"
+        print(f"Estado actual: {estado}")  # Usar estado temporalmente
         self.root.withdraw()
-        # Abre la ventana de la tienda sin necesidad de autenticación
         abrir_tienda(self.root)
+
+    def guardar_usuario_json(self, usuario):
+        # Crea o actualiza un archivo JSON solo con el usuario
+        datos = {"usuario": usuario}
+        with open("Commons/usuario_sesion.json", "w") as archivo_json:
+            json.dump(datos, archivo_json)
+        print(f"Guardado en JSON: Usuario={usuario}")
+
