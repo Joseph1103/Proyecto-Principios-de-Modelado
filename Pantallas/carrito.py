@@ -9,7 +9,7 @@ class CarritoVentana:
         self.carrito = carrito
         self.carrito_ventana = tk.Toplevel()
         self.carrito_ventana.title("Carrito de Compras")
-        self.carrito_ventana.geometry("400x700")
+        self.carrito_ventana.geometry("500x700")
         self.carrito_ventana.configure(bg="#FCC509")
 
         # Crear los elementos de la interfaz

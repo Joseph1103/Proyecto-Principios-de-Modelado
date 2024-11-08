@@ -10,19 +10,19 @@ class VentanaSinpe:
         self.ventana_sinpe = tk.Toplevel()
         self.ventana_sinpe.title("Pago con SINPE Móvil")
         self.ventana_sinpe.geometry("400x400")
-        self.ventana_sinpe.configure(bg="#A8D5E2")
+        self.ventana_sinpe.configure(bg="#FCC509")
 
         label_titulo = tk.Label(self.ventana_sinpe, text="Realiza el pago a través de SINPE Móvil", font=("Arial", 14),
-                                bg="#A8D5E2", fg="black")
+                                bg="#FCC509", fg="black")
         label_titulo.pack(pady=20)
 
         # Mostrar el número de SINPE al que se debe realizar el pago
         label_sinpe = tk.Label(self.ventana_sinpe, text="Hacer el SINPE Móvil al número: 83005821", font=("Arial", 12),
-                               bg="#A8D5E2", fg="black")
+                               bg="#FCC509", fg="black")
         label_sinpe.pack(pady=10)
 
         # Ingresar la dirección si el usuario no está registrado
-        label_direccion = tk.Label(self.ventana_sinpe, text="Dirección para la entrega:", bg="#A8D5E2", fg="black")
+        label_direccion = tk.Label(self.ventana_sinpe, text="Dirección para la entrega:", bg="#FCC509", fg="black")
         label_direccion.pack(pady=5)
         self.entry_direccion = tk.Entry(self.ventana_sinpe)
         self.entry_direccion.pack(pady=5)

@@ -1,6 +1,7 @@
 import tkinter as tk
-from Pantallas.Compra.ventana_tarjeta import VentanaTarjeta  # Importamos la clase VentanaTarjeta
-from Pantallas.Compra.ventana_sinpe import VentanaSinpe  # Importamos la ventana de SINPE Móvil
+from Pantallas.Compra.ventana_tarjeta import VentanaTarjeta
+from Pantallas.Compra.ventana_sinpe import VentanaSinpe
+from Pantallas.Compra.ventana_factura_efectivo import VentanaFacturaEfectivo
 
 class MetodoPagoVentana:
     def __init__(self, carrito):
@@ -36,4 +37,14 @@ class MetodoPagoVentana:
         VentanaSinpe(self.carrito, total)  # Pasar el carrito y el total a la ventana de SINPE
 
     def pagar_con_efectivo(self):
-        print("Pago en efectivo seleccionado.")
+        # Calcula el total antes de generar la factura
+        total = sum(item['precio'] * item['cantidad'] for item in self.carrito)
+
+        # Obtener el nombre del cliente (puedes pedirlo mediante un cuadro de diálogo o usar un campo almacenado)
+        nombre_cliente = "Cliente no registrado"
+
+        # Abrir la ventana de factura para el pago en efectivo
+        VentanaFacturaEfectivo(self.carrito, total, nombre_cliente)
+
+        # Limpiar el carrito después de generar la factura
+        self.carrito.clear()

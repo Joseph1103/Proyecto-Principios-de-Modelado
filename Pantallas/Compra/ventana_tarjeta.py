@@ -93,7 +93,6 @@ class VentanaTarjeta:
 
         # Liberar el carrito después del pago
         self.carrito.clear()  # Limpiar el carrito
-        messagebox.showinfo("Carrito Vaciado", "El carrito ha sido vaciado después del pago.")
 
         # Cerrar la ventana de tarjeta
         self.ventana_tarjeta.destroy()
