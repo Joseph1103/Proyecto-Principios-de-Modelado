@@ -1,8 +1,8 @@
-Tomates 1Kg, 1500, 19
+Tomates 1Kg, 1500, 10
 Papas 1Kg, 1000, 23
-Salsa de tomate enlatada 400g, 1500, 30
+Salsa de tomate enlatada 400g, 1500, 25
 Salsa de tomate enlatada 1kg, 2000, 25
-Salsa de tomate envasada 500ml,1500, 15
+Salsa de tomate envasada 500ml, 1500, 20
 Salsa de tomate envasada 1L, 2000, 30
 Chips de papa 200g, 400, 50
 Chips de papa 500g, 800, 40

@@ -42,8 +42,38 @@ class VentanaSinpe:
         # Generar la factura y mostrarla
         VentanaFacturaSinpe(self.carrito, self.total, direccion)
 
-        # Limpiar el carrito
+        self.actualizar_inventario_txt()
         self.carrito.clear()
-
-        # Cierra la ventana después de confirmar el pago
         self.ventana_sinpe.destroy()
+
+    def actualizar_inventario_txt(self):
+        try:
+            # Cargar el inventario actual
+            with open('Commons/articulos.txt', 'r') as archivo:
+                lineas = archivo.readlines()
+
+            # Crear un diccionario para los productos en el inventario
+            inventario = {}
+            for linea in lineas:
+                if linea.strip():  # Ignorar líneas vacías
+                    partes = linea.strip().split(', ')
+                    if len(partes) == 3:  # Asegurar que haya 3 valores
+                        nombre, precio, cantidad = partes
+                        inventario[nombre] = {'precio': int(precio), 'cantidad': int(cantidad)}
+                    else:
+                        print(f"Línea mal formateada: {linea.strip()}")  # Opcional: Log de errores
+
+            # Restar la cantidad comprada del inventario
+            for item in self.carrito:
+                if item['nombre'] in inventario:
+                    inventario[item['nombre']]['cantidad'] -= item['cantidad']
+
+            # Guardar el inventario actualizado
+            with open('Commons/articulos.txt', 'w') as archivo:
+                for nombre, datos in inventario.items():
+                    archivo.write(f"{nombre}, {datos['precio']}, {datos['cantidad']}\n")
+
+        except FileNotFoundError:
+            print("Error: No se encontró el archivo de inventario.")
+        except Exception as e:
+            print(f"Error: {e}")
