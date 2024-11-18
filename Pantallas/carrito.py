@@ -1,12 +1,14 @@
 import tkinter as tk
 from tkinter import ttk
+from tkinter import messagebox
 from Pantallas.Compra.metodo_pago import MetodoPagoVentana
 
 
 class CarritoVentana:
-    def __init__(self, carrito):
-        # Guardar el carrito y crear la ventana
+    def __init__(self, carrito, productos):
+        # Guardar el carrito, productos y crear la ventana
         self.carrito = carrito
+        self.productos = productos  # Lista de productos disponibles
         self.carrito_ventana = tk.Toplevel()
         self.carrito_ventana.title("Carrito de Compras")
         self.carrito_ventana.geometry("500x700")
@@ -72,8 +74,8 @@ class CarritoVentana:
         for item in self.carrito:
             total_producto = item['precio'] * item['cantidad']
             total_carrito += total_producto
-            self.tree.insert('', tk.END, values=(
-            item['nombre'], f"₡{item['precio']:.2f}", item['cantidad'], f"₡{total_producto:.2f}"))
+            self.tree.insert('', tk.END, values=(item['nombre'], f"₡{item['precio']:.2f}", item['cantidad'],
+                                                 f"₡{total_producto:.2f}"))
 
         # Actualizar el texto del total
         self.label_total.config(text=f"Total: ₡{total_carrito:.2f}")
@@ -98,10 +100,31 @@ class CarritoVentana:
         if selected_item:
             # Obtener el índice del producto en la lista carrito
             index = self.tree.index(selected_item[0])
-            # Aumentar la cantidad del producto en 1
-            self.carrito[index]['cantidad'] += 1
+
+            nombre_producto = self.carrito[index]['nombre']
+            cantidad_actual = self.carrito[index]['cantidad']
+
+            # Buscar el producto en el inventario para obtener la cantidad disponible
+            producto_en_inventario = next((p for p in self.productos if p['nombre'] == nombre_producto), None)
+
+            if producto_en_inventario:
+                cantidad_disponible = producto_en_inventario['cantidad']
+
+                # Verificar si se puede agregar más productos
+                if cantidad_actual < cantidad_disponible:
+                    self.carrito[index]['cantidad'] += 1  # Aumentar la cantidad en el carrito
+                else:
+                    # Si no hay suficiente stock, mostrar un mensaje
+                    self.mostrar_mensaje("No se puede agregar más productos", f"Solo hay {cantidad_disponible} disponibles de {nombre_producto}.")
+            else:
+                self.mostrar_mensaje("Producto no encontrado", "El producto no está disponible en el inventario.")
+
             # Actualizar la vista y el total
             self.actualizar_carrito()
+
+    def mostrar_mensaje(self, titulo, mensaje):
+        # Mostrar un mensaje emergente con el título y el mensaje
+        messagebox.showinfo(titulo, mensaje)
 
     def abrir_metodo_pago(self):
         # Abre la ventana de métodos de pago
@@ -115,5 +138,5 @@ class CarritoVentana:
 
 
 # Ejemplo de uso
-def abrir_carrito(carrito):
-    CarritoVentana(carrito)
+def abrir_carrito(carrito, productos):
+    CarritoVentana(carrito, productos)

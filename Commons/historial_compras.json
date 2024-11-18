@@ -88,5 +88,57 @@
             }
         ],
         "total": 6300.0
+    },
+    {
+        "cliente": "sin_usuario",
+        "M\u00e9todo de pago": "En efectivo",
+        "fecha": "2024-11-18",
+        "productos": [
+            {
+                "nombre": "Salsa de tomate enlatada 400g (rebajado 90.0%)",
+                "precio": 150.0,
+                "cantidad": 1
+            }
+        ],
+        "total": 150.0
+    },
+    {
+        "cliente": "majo",
+        "M\u00e9todo de pago": "En efectivo",
+        "fecha": "2024-11-18",
+        "productos": [
+            {
+                "nombre": "Papas 1Kg (rebajado 50.0%)",
+                "precio": 750.0,
+                "cantidad": 5
+            }
+        ],
+        "total": 3750.0
+    },
+    {
+        "cliente": "abril",
+        "M\u00e9todo de pago": "Por SINPE M\u00f3vil",
+        "fecha": "2024-11-18",
+        "productos": [
+            {
+                "nombre": "Papas 1Kg (rebajado 60.0%)",
+                "precio": 600.0,
+                "cantidad": 5
+            }
+        ],
+        "total": 3000.0
+    },
+    {
+        "cliente": "majo",
+        "M\u00e9todo de pago": "Por SINPE M\u00f3vil",
+        "fecha": "2024-11-18",
+        "productos": [
+            {
+                "nombre": "Salsa de tomate enlatada 400g (rebajado 80.0%)",
+                "precio": 300.0,
+                "cantidad": 4
+            }
+        ],
+        "total": 1200.0
     }
 ]

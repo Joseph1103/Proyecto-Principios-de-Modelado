@@ -4,6 +4,7 @@ import os
 import json
 from .clasificacion import abrir_clasificacion
 from Pantallas.historial_recibos import abrir_historial_compras
+from Pantallas.promociones import abrir_promociones
 
 
 
@@ -39,6 +40,10 @@ def abrir_clasificador(root):
     boton_historial = tk.Button(clasificador_ventana, text="Historial de Compras", command=lambda: abrir_historial_compras(),
                                 bg="white", fg="#B90518", width=25, height=2)
     boton_historial.pack(pady=20)
+
+    boton_promociones = tk.Button(clasificador_ventana, text="Crear promociones",
+    command=lambda: abrir_promociones(),bg="white", fg="#B90518", width=25, height=2)
+    boton_promociones.pack(pady=20)
 
     boton_cerrar = tk.Button(clasificador_ventana, text="Cerrar Clasificador", command=lambda: cerrar_clasificador(root, clasificador_ventana),
                              bg="white", fg="#B90518", width=25, height=2)

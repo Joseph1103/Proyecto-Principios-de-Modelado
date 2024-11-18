@@ -1,6 +1,6 @@
 Tomates 1Kg, 1500, 14
-Papas 1Kg, 1000, 180
-Salsa de tomate enlatada 400g, 1500, 25
+Papas 1Kg, 1500, 95
+Salsa de tomate enlatada 400g, 1500, 20
 Salsa de tomate enlatada 1kg, 2000, 20
 Salsa de tomate envasada 500ml, 1500, 18
 Salsa de tomate envasada 1L, 2000, 29
