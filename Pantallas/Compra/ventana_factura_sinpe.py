@@ -1,7 +1,7 @@
 import tkinter as tk
-from tkinter import messagebox
 import json
 import random
+from datetime import datetime
 
 # Función para obtener el estado de la sesión
 def obtener_usuario_sesion():
@@ -16,6 +16,7 @@ class VentanaFacturaSinpe:
     def __init__(self, carrito, total, direccion_propietario):
         self.carrito = carrito
         self.total = total
+        self.fecha_factura = datetime.now().strftime("%Y-%m-%d")
         self.usuario = obtener_usuario_sesion()
         self.direccion_propietario = direccion_propietario
         self.ventana_factura = tk.Toplevel()
@@ -66,3 +67,37 @@ class VentanaFacturaSinpe:
 
         boton_cerrar = tk.Button(self.ventana_factura, text="Cerrar", command=self.ventana_factura.destroy, fg="black", width=15)
         boton_cerrar.pack(pady=10)
+
+        self.guardar_en_historial()
+
+    def guardar_en_historial(self):
+        factura = {
+            "cliente": self.usuario,
+            "Método de pago": "Por SINPE Móvil",
+            "fecha": self.fecha_factura,
+            "productos": self.carrito,
+            "total": self.total
+        }
+
+        try:
+            # Intentar cargar el historial actual
+            try:
+                with open("Commons/historial_compras.json", "r") as archivo:
+                    contenido = archivo.read()
+                    if not contenido.strip():  # Verificar si el archivo está vacío
+                        historial = []
+                    else:
+                        historial = json.loads(contenido)
+            except FileNotFoundError:
+                historial = []  # Inicializar historial vacío si no existe el archivo
+
+            # Agregar la nueva factura
+            historial.append(factura)
+
+            # Guardar el historial actualizado
+            with open("Commons/historial_compras.json", "w") as archivo:
+                json.dump(historial, archivo, indent=4)
+
+            print("Factura guardada en el historial.")
+        except Exception as e:
+            print(f"Error al guardar en el historial: {e}")

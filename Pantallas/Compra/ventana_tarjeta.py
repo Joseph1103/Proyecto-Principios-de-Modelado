@@ -1,7 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox
 from Pantallas.Compra.ventana_factura_tarj import VentanaFactura
-from datetime import datetime
 
 
 class VentanaTarjeta:

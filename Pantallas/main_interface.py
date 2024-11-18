@@ -167,7 +167,6 @@ class InterfazClasificacion:
                 if usuario == usuario_registrado and contrasena == contrasena_registrada:
                     if guardar:
                         self.guardar_usuario_json(usuario)  # Guarda solo si `guardar=True`
-                    print(f"Estado actual: {estado}")  # Usar estado temporalmente
                     self.root.withdraw()  # Oculta la ventana principal
                     funcion_abrir(self.root)
                     return
@@ -179,7 +178,6 @@ class InterfazClasificacion:
     def entrar_sin_sesion(self):
         estado = 1  # Definir estado como 1 cuando entra sin usuario
         self.guardar_usuario_json("sin_usuario")  # Guardar en JSON solo con "sin_usuario"
-        print(f"Estado actual: {estado}")  # Usar estado temporalmente
         self.root.withdraw()
         abrir_tienda(self.root)
 
@@ -188,5 +186,4 @@ class InterfazClasificacion:
         datos = {"usuario": usuario}
         with open("Commons/usuario_sesion.json", "w") as archivo_json:
             json.dump(datos, archivo_json)
-        print(f"Guardado en JSON: Usuario={usuario}")
 

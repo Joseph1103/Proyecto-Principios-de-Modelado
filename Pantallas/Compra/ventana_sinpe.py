@@ -1,7 +1,8 @@
 import tkinter as tk
 from tkinter import messagebox
 from Pantallas.Compra.ventana_factura_sinpe import VentanaFacturaSinpe  # Importamos la clase de la factura
-
+import json
+from datetime import datetime
 
 class VentanaSinpe:
     def __init__(self, carrito, total):

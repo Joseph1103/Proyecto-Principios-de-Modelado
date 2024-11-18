@@ -1,6 +1,7 @@
 import tkinter as tk
 import random
 import json
+from datetime import datetime
 
 def obtener_usuario_sesion():
     try:
@@ -14,7 +15,7 @@ class VentanaFacturaEfectivo:
     def __init__(self, carrito, total, nombre_cliente=None):
         self.carrito = carrito
         self.total = total
-        # Asigna el usuario de sesión como nombre de cliente
+        self.fecha_factura = datetime.now().strftime("%Y-%m-%d")
         self.nombre_cliente = obtener_usuario_sesion()
         self.codigo_retiro = self.generar_codigo_retiro()
 
@@ -66,6 +67,8 @@ class VentanaFacturaEfectivo:
         boton_cerrar = tk.Button(self.ventana_factura, text="Cerrar Factura", command=self.cerrar_factura, fg="black")
         boton_cerrar.pack(pady=20)
 
+        self.guardar_en_historial()
+
     def generar_codigo_retiro(self):
         # Genera un código de retiro aleatorio de 6 dígitos
         return str(random.randint(100000, 999999))
@@ -73,3 +76,36 @@ class VentanaFacturaEfectivo:
     def cerrar_factura(self):
         # Cierra la ventana de la factura
         self.ventana_factura.destroy()
+
+    def guardar_en_historial(self):
+        factura = {
+            "cliente": self.nombre_cliente,
+            "Método de pago": "En efectivo",
+            "fecha": self.fecha_factura,
+            "productos": self.carrito,
+            "total": self.total
+        }
+
+        try:
+            # Intentar cargar el historial actual
+            try:
+                with open("Commons/historial_compras.json", "r") as archivo:
+                    contenido = archivo.read()
+                    if not contenido.strip():  # Verificar si el archivo está vacío
+                        historial = []
+                    else:
+                        historial = json.loads(contenido)
+            except FileNotFoundError:
+                historial = []  # Inicializar historial vacío si no existe el archivo
+
+            # Agregar la nueva factura
+            historial.append(factura)
+
+            # Guardar el historial actualizado
+            with open("Commons/historial_compras.json", "w") as archivo:
+                json.dump(historial, archivo, indent=4)
+
+            print("Factura guardada en el historial.")
+        except Exception as e:
+            print(f"Error al guardar en el historial: {e}")
+

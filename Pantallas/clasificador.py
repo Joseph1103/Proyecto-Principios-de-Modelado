@@ -3,6 +3,7 @@ from tkinter import ttk, messagebox
 import os
 import json
 from .clasificacion import abrir_clasificacion
+from Pantallas.historial_recibos import abrir_historial_compras
 
 
 
@@ -34,6 +35,10 @@ def abrir_clasificador(root):
     boton_bom = tk.Button(clasificador_ventana, text="BOM", command=lambda: abrir_ventana_bom(clasificador_ventana, root),
                           bg="white", fg="#B90518", width=25, height=2)
     boton_bom.pack(pady=10)
+
+    boton_historial = tk.Button(clasificador_ventana, text="Historial de Compras", command=lambda: abrir_historial_compras(),
+                                bg="white", fg="#B90518", width=25, height=2)
+    boton_historial.pack(pady=20)
 
     boton_cerrar = tk.Button(clasificador_ventana, text="Cerrar Clasificador", command=lambda: cerrar_clasificador(root, clasificador_ventana),
                              bg="white", fg="#B90518", width=25, height=2)

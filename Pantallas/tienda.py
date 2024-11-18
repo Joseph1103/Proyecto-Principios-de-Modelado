@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 from Pantallas.carrito import abrir_carrito
 from tkinter import font
+from Pantallas.Historial_comp import abrir_historial_compras
 
 def cargar_productos(nombre_archivo):
     productos = []
@@ -83,12 +84,16 @@ def abrir_tienda(root):
 
     boton_carrito = tk.Button(tienda_ventana, text="Ver Carrito",command=lambda: abrir_carrito(carrito),
     bg="white", fg="#B90518", width=20)
-    boton_carrito.place(x=350, y=400)
+    boton_carrito.place(x=350, y=420)
+
+    boton_historial = tk.Button(tienda_ventana, text="Historial de Compras", command=lambda: abrir_historial_compras(),
+    bg="white", fg="#B90518", width=20)
+    boton_historial.place(x=350, y=380)
 
     # Botón para cerrar la tienda y volver a la ventana principal
     boton_cerrar = tk.Button(tienda_ventana, text="Cerrar Tienda", command=lambda: cerrar_tienda(root, tienda_ventana),
     bg="white", fg="#B90518", width=25, height=2)
-    boton_cerrar.place(x=325, y=450)
+    boton_cerrar.place(x=325, y=460)
 
 def cerrar_tienda(root, tienda_ventana):
     tienda_ventana.destroy()  # Cierra la ventana de la tienda

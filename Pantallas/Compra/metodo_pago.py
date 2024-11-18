@@ -47,7 +47,6 @@ class MetodoPagoVentana:
         VentanaFacturaEfectivo(self.carrito, total, nombre_cliente)
 
         self.actualizar_inventario_txt()
-
         # Limpiar el carrito después de generar la factura
         self.carrito.clear()
 
