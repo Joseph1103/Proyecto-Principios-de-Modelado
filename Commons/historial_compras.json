@@ -1,0 +1,92 @@
+[
+    {
+        "cliente": "joseph",
+        "M\u00c3\u00a9todo de pago": "Tarjeta",
+        "fecha": "2024-11-17",
+        "productos": [
+            {
+                "nombre": "Papas 1Kg",
+                "precio": 1000.0,
+                "cantidad": 5
+            }
+        ],
+        "total": 5000.0
+    },
+    {
+        "cliente": "sin_usuario",
+        "M\u00c3\u00a9todo de pago": "Por SINPE M\u00c3\u00b3vil",
+        "fecha": "2024-11-17",
+        "productos": [
+            {
+                "nombre": "Papas 1Kg",
+                "precio": 1000.0,
+                "cantidad": 5
+            },
+            {
+                "nombre": "Chips de papa 200g",
+                "precio": 400.0,
+                "cantidad": 4
+            }
+        ],
+        "total": 6600.0
+    },
+    {
+        "cliente": "joseph",
+        "M\u00c3\u00a9todo de pago": "Por SINPE M\u00c3\u00b3vil",
+        "fecha": "2024-11-17",
+        "productos": [
+            {
+                "nombre": "Chips de papa 200g",
+                "precio": 400.0,
+                "cantidad": 3
+            },
+            {
+                "nombre": "Salsa de tomate envasada 1L",
+                "precio": 2000.0,
+                "cantidad": 1
+            },
+            {
+                "nombre": "Salsa de tomate envasada 500ml",
+                "precio": 1500.0,
+                "cantidad": 1
+            }
+        ],
+        "total": 4700.0
+    },
+    {
+        "cliente": "sin_usuario",
+        "M\u00c3\u00a9todo de pago": "Por SINPE M\u00c3\u00b3vil",
+        "fecha": "2024-11-17",
+        "productos": [
+            {
+                "nombre": "Papas 1Kg",
+                "precio": 1000.0,
+                "cantidad": 5
+            }
+        ],
+        "total": 5000.0
+    },
+    {
+        "cliente": "joseph",
+        "M\u00e9todo de pago": "En efectivo",
+        "fecha": "2024-11-17",
+        "productos": [
+            {
+                "nombre": "Chips de papa 200g",
+                "precio": 400.0,
+                "cantidad": 2
+            },
+            {
+                "nombre": "Salsa de tomate envasada 500ml",
+                "precio": 1500.0,
+                "cantidad": 1
+            },
+            {
+                "nombre": "Salsa de tomate enlatada 1kg",
+                "precio": 2000.0,
+                "cantidad": 2
+            }
+        ],
+        "total": 6300.0
+    }
+]
