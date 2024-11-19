@@ -140,5 +140,18 @@
             }
         ],
         "total": 1200.0
+    },
+    {
+        "cliente": "joseph",
+        "M\u00e9todo de pago": "Tarjeta",
+        "fecha": "2024-11-18 18:00:40",
+        "productos": [
+            {
+                "nombre": "Salsa de tomate enlatada 400g (rebajado 30.0%)",
+                "precio": 1050.0,
+                "cantidad": 3
+            }
+        ],
+        "total": 3150.0
     }
 ]
