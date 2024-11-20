@@ -47,6 +47,9 @@ class TiendaApp:
         self.btn_revertir = tk.Button(self.root, text="Revertir Rebaja", command=self.revertir_rebaja)
         self.btn_revertir.pack(pady=10)
 
+        self.btn_cerrar = tk.Button(self.root, text="Cerrar", command=self.root.destroy, bg="red", fg="white")
+        self.btn_cerrar.pack(pady=10)
+
         # Cargar datos iniciales
         self.cargar_articulos()
 

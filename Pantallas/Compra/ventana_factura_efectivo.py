@@ -15,7 +15,7 @@ class VentanaFacturaEfectivo:
     def __init__(self, carrito, total, nombre_cliente=None):
         self.carrito = carrito
         self.total = total
-        self.fecha_factura = datetime.now().strftime("%Y-%m-%d")
+        self.fecha_factura = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         self.nombre_cliente = obtener_usuario_sesion()
         self.codigo_retiro = self.generar_codigo_retiro()
 

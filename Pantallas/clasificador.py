@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
+from datetime import datetime
 import os
 import json
 from .clasificacion import abrir_clasificacion
@@ -55,7 +56,7 @@ def abrir_ventana_bom(parent, root):
 
     ventana_bom = tk.Toplevel(root)
     ventana_bom.title("Ventana BOM")
-    ventana_bom.geometry("600x500")
+    ventana_bom.geometry("600x600")
     ventana_bom.configure(bg="#FCC509")
 
     label = tk.Label(ventana_bom, text="BOM", font=("Arial", 22), bg="#FCC509", fg="black")
@@ -115,6 +116,53 @@ def abrir_ventana_bom(parent, root):
                 tk.Label(table_frame, text=f"{material['cantidad']} {material['unidadMedida']}", font=("Arial", 12), bg="white", fg="black", width=20).grid(row=i, column=1, padx=1, pady=1)
 
     codigo_selector.bind("<<ComboboxSelected>>", mostrar_receta)
+
+    def mostrar_materiales_utilizados(materiales, cantidad_producir, ventana_bom):
+        # Crear una nueva ventana
+        ventana_materiales = tk.Toplevel(ventana_bom)
+        ventana_materiales.title("Materiales Utilizados")
+        ventana_materiales.geometry("450x400")
+        ventana_materiales.configure(bg="#FCC509")
+
+        # Obtener la fecha y hora actuales
+        fecha_produccion = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+        # Crear una etiqueta de título
+        label = tk.Label(ventana_materiales, text="Materiales Utilizados", font=("Arial", 18), bg="#FCC509", fg="black")
+        label.pack(pady=10)
+
+        # Mostrar la fecha de producción
+        fecha_label = tk.Label(ventana_materiales, text=f"Fecha de Producción: {fecha_produccion}", font=("Arial", 16),
+                               bg="#FCC509", fg="black")
+        fecha_label.pack(pady=5)
+
+        # Crear una tabla para mostrar los materiales y cantidades utilizadas
+        table_frame = tk.Frame(ventana_materiales, bg="#FCC509")
+        table_frame.pack(pady=10)
+
+        # Encabezados de la tabla
+        material_label = tk.Label(table_frame, text="Material", font=("Arial", 12, "bold"), bg="white", fg="black",
+                                  width=20)
+        material_label.grid(row=0, column=0, padx=10, pady=5)
+
+        cantidad_label = tk.Label(table_frame, text="Cantidad Utilizada", font=("Arial", 12, "bold"), bg="white",
+                                  fg="black", width=20)
+        cantidad_label.grid(row=0, column=1, padx=10, pady=5)
+
+        # Mostrar los materiales y las cantidades utilizadas
+        for i, material in enumerate(materiales, start=1):
+            codigo_material = material["codigoMaterial"]
+            cantidad_material = material["cantidad"] * cantidad_producir
+            cantidad_redondeada = round(cantidad_material, 2)  # Redondear a 2 decimales
+            tk.Label(table_frame, text=codigo_material, font=("Arial", 12), bg="white", fg="black", width=20).grid(
+                row=i, column=0, padx=10, pady=5)
+            tk.Label(table_frame, text=f"{cantidad_redondeada} {material['unidadMedida']}", font=("Arial", 12),
+                     bg="white", fg="black", width=20).grid(row=i, column=1, padx=10, pady=5)
+
+        # Botón para cerrar la ventana de materiales utilizados
+        boton_cerrar = tk.Button(ventana_materiales, text="Cerrar", command=ventana_materiales.destroy, bg="red",
+                                 fg="white", width=15, height=2)
+        boton_cerrar.pack(pady=10)
 
     def producir():
         codigo = codigo_selector.get()
@@ -187,6 +235,9 @@ def abrir_ventana_bom(parent, root):
 
         # Mostrar mensaje de éxito
         messagebox.showinfo("Producción", f"Se han producido {cantidad_producir} unidades de {codigo}.")
+
+        # Mostrar los materiales utilizados en una nueva ventana
+        mostrar_materiales_utilizados(materiales, cantidad_producir, ventana_bom)
 
     boton_producir = tk.Button(ventana_bom, text="Producir", command=producir, bg="green", fg="white", width=15, height=2)
     boton_producir.pack(pady=10)

@@ -72,6 +72,10 @@ class MetodoPagoVentana:
                 if item['nombre'] in inventario:
                     inventario[item['nombre']]['cantidad'] -= item['cantidad']
 
+            productos_a_eliminar = [nombre for nombre, datos in inventario.items() if datos['cantidad'] == 0]
+            for producto in productos_a_eliminar:
+                del inventario[producto]
+
             # Guardar el inventario actualizado
             with open('Commons/articulos.txt', 'w') as archivo:
                 for nombre, datos in inventario.items():

@@ -23,17 +23,17 @@ class HistorialCompras:
         # Crea la ventana del historial de compras
         historial_ventana = tk.Toplevel()
         historial_ventana.title("Historial de Compras")
-        historial_ventana.geometry("800x600")  # Tamaño fijo de la ventana
+        historial_ventana.geometry("610x750")  # Tamaño fijo de la ventana
         historial_ventana.configure(bg="#F5F5F5")
 
         # Título del historial
         label_historial = tk.Label(historial_ventana, text="Historial de Compras", font=("Arial", 18), bg="#F5F5F5",
                                    fg="black")
-        label_historial.pack(pady=10)
+        label_historial.pack(pady=5)  # Reducir el espacio vertical
 
         # Creamos un Canvas para el contenido del historial con un marco scrollable
-        canvas = tk.Canvas(historial_ventana)
-        canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=True, padx=10)
+        canvas = tk.Canvas(historial_ventana, height=400, bg="#F5F5F5")  # Limitar altura del canvas
+        canvas.pack(side=tk.TOP, fill=tk.BOTH, expand=True, padx=10)
 
         # Barra de desplazamiento
         scrollbar = tk.Scrollbar(historial_ventana, orient="vertical", command=canvas.yview)
@@ -48,8 +48,7 @@ class HistorialCompras:
 
         # Si no hay historial, mostramos un mensaje
         if not self.historial:
-            tk.Label(frame_historial, text="No tienes compras aún.", bg="#FFFFFF", anchor="w").pack(fill=tk.X, padx=5,
-                                                                                                    pady=2)
+            tk.Label(frame_historial, text="No tienes compras aún.", bg="#FFFFFF", anchor="w").pack(fill=tk.X, padx=5, pady=2)
         else:
             for compra in self.historial:
                 cliente = compra.get("cliente", "Desconocido")
@@ -64,8 +63,7 @@ class HistorialCompras:
 
                 for producto in productos:
                     detalle_producto = f"  {producto['nombre']} - Cantidad: {producto['cantidad']} - Precio: ₡{producto['precio']}"
-                    tk.Label(frame_historial, text=detalle_producto, bg="#FFFFFF", anchor="w").pack(fill=tk.X, padx=15,
-                                                                                                    pady=2)
+                    tk.Label(frame_historial, text=detalle_producto, bg="#FFFFFF", anchor="w").pack(fill=tk.X, padx=15, pady=2)
 
                 tk.Label(frame_historial, text="-" * 60, bg="#FFFFFF").pack(fill=tk.X, padx=5, pady=5)
 
@@ -73,14 +71,21 @@ class HistorialCompras:
         frame_historial.update_idletasks()
         canvas.config(scrollregion=canvas.bbox("all"))
 
-        # Frame para el botón de cerrar, fuera del área scrollable
-        frame_boton = tk.Frame(historial_ventana, bg="#F5F5F5")
-        frame_boton.pack(side=tk.BOTTOM, fill=tk.X, pady=10)
+        # Vinculamos la rueda del ratón al desplazamiento del canvas
+        def scroll_con_rueda(event):
+            canvas.yview_scroll(-1 * (event.delta // 120), "units")
 
-        # Botón para cerrar el historial
+        canvas.bind_all("<MouseWheel>", scroll_con_rueda)
+
+        # Frame para el botón de cerrar, fuera del área desplazable
+        frame_boton = tk.Frame(historial_ventana, bg="#F5F5F5")
+        frame_boton.pack(side=tk.BOTTOM, pady=10)
+
+        # Botón para cerrar el historial, centrado
         boton_cerrar = tk.Button(frame_boton, text="Cerrar", command=historial_ventana.destroy, bg="white",
                                  fg="#B90518", width=20)
-        boton_cerrar.pack()
+        boton_cerrar.pack(anchor="center")
+
 
 
 # Crear una instancia global para el historial

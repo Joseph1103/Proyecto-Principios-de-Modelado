@@ -16,7 +16,7 @@ class VentanaFacturaSinpe:
     def __init__(self, carrito, total, direccion_propietario):
         self.carrito = carrito
         self.total = total
-        self.fecha_factura = datetime.now().strftime("%Y-%m-%d")
+        self.fecha_factura = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         self.usuario = obtener_usuario_sesion()
         self.direccion_propietario = direccion_propietario
         self.ventana_factura = tk.Toplevel()
@@ -73,7 +73,7 @@ class VentanaFacturaSinpe:
     def guardar_en_historial(self):
         factura = {
             "cliente": self.usuario,
-            "Método de pago": "Por SINPE Móvil",
+            "Método de pago": "SINPE Móvil",
             "fecha": self.fecha_factura,
             "productos": self.carrito,
             "total": self.total

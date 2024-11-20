@@ -15,7 +15,6 @@ def obtener_usuario_sesion():
 class HistorialCompras:
     def __init__(self, archivo_historial):
         self.archivo_historial = archivo_historial
-        self.historial = self.cargar_historial()
 
     def cargar_historial(self):
         try:
@@ -27,6 +26,8 @@ class HistorialCompras:
             return []
 
     def mostrar_historial(self):
+        # Cargar el historial actualizado cada vez que se abre la ventana
+        self.historial = self.cargar_historial()
         usuario_actual = obtener_usuario_sesion()
 
         if usuario_actual == 'sin_usuario':
@@ -37,16 +38,17 @@ class HistorialCompras:
 
         historial_ventana = tk.Toplevel()
         historial_ventana.title("Historial de Compras")
-        historial_ventana.geometry("800x600")
+        historial_ventana.geometry("610x750")
         historial_ventana.configure(bg="#F5F5F5")
 
+        # Encabezado
         label_historial = tk.Label(historial_ventana, text="Historial de Compras", font=("Arial", 18), bg="#F5F5F5",
                                    fg="black")
-        label_historial.pack(pady=10)
+        label_historial.pack(pady=5)  # Espaciado más pequeño
 
-        # Crear un Canvas para el contenido del historial
-        canvas = tk.Canvas(historial_ventana)
-        canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=True, padx=10)
+        # Crear un Canvas para el contenido del historial con un tamaño limitado en el eje Y
+        canvas = tk.Canvas(historial_ventana, height=400, bg="#F5F5F5")  # Limitar la altura del canvas
+        canvas.pack(side=tk.TOP, fill=tk.BOTH, expand=True, padx=10)
 
         # Barra de desplazamiento
         scrollbar = tk.Scrollbar(historial_ventana, orient="vertical", command=canvas.yview)
@@ -85,14 +87,10 @@ class HistorialCompras:
         frame_historial.update_idletasks()
         canvas.config(scrollregion=canvas.bbox("all"))
 
-        # Frame para el botón de cerrar, fuera del área desplazable
-        frame_boton = tk.Frame(historial_ventana, bg="#F5F5F5")
-        frame_boton.pack(side=tk.BOTTOM, fill=tk.X, pady=10)
-
-        # Botón para cerrar el historial
-        boton_cerrar = tk.Button(frame_boton, text="Cerrar", command=historial_ventana.destroy, bg="white",
+        # Botón para cerrar el historial, centrado
+        boton_cerrar = tk.Button(historial_ventana, text="Cerrar", command=historial_ventana.destroy, bg="white",
                                  fg="#B90518", width=20)
-        boton_cerrar.pack()
+        boton_cerrar.pack(side=tk.BOTTOM, pady=10, anchor="center")
 
     def mostrar_mensaje(self, titulo, mensaje):
         mensaje_ventana = tk.Toplevel()
@@ -110,6 +108,7 @@ class HistorialCompras:
 
 # Crear una instancia del historial de compras
 historial_compras = HistorialCompras('Commons/historial_compras.json')
+
 
 
 def abrir_historial_compras():

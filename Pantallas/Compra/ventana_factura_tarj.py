@@ -111,7 +111,6 @@ class VentanaFactura:
             with open("Commons/historial_compras.json", "w") as archivo:
                 json.dump(historial, archivo, indent=4)
 
-            print("Factura guardada en el historial.")
         except Exception as e:
             print(f"Error al guardar en el historial: {e}")
 

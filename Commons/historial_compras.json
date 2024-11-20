@@ -153,5 +153,93 @@
             }
         ],
         "total": 3150.0
+    },
+    {
+        "cliente": "sin_usuario",
+        "M\u00e9todo de pago": "En efectivo",
+        "fecha": "2024-11-19",
+        "productos": [
+            {
+                "nombre": "Papas 1Kg (rebajado 50.0%)",
+                "precio": 750.0,
+                "cantidad": 5
+            }
+        ],
+        "total": 3750.0
+    },
+    {
+        "cliente": "sin_usuario",
+        "M\u00e9todo de pago": "Por SINPE M\u00f3vil",
+        "fecha": "2024-11-19",
+        "productos": [
+            {
+                "nombre": "Salsa de tomate enlatada 400g",
+                "precio": 1500.0,
+                "cantidad": 2
+            }
+        ],
+        "total": 3000.0
+    },
+    {
+        "cliente": "Alejandro",
+        "M\u00e9todo de pago": "Tarjeta",
+        "fecha": "2024-11-19 23:56:22",
+        "productos": [
+            {
+                "nombre": "Chips de papa 200g (rebajado 60.0%)",
+                "precio": 160.0,
+                "cantidad": 5
+            }
+        ],
+        "total": 800.0
+    },
+    {
+        "cliente": "Alejandro",
+        "M\u00e9todo de pago": "Por SINPE M\u00f3vil",
+        "fecha": "2024-11-20",
+        "productos": [
+            {
+                "nombre": "Papas 1Kg",
+                "precio": 1500.0,
+                "cantidad": 2
+            },
+            {
+                "nombre": "Salsa de tomate envasada 1L",
+                "precio": 2000.0,
+                "cantidad": 4
+            },
+            {
+                "nombre": "Salsa de tomate envasada 500ml",
+                "precio": 1500.0,
+                "cantidad": 3
+            }
+        ],
+        "total": 15500.0
+    },
+    {
+        "cliente": "Alejandro",
+        "M\u00e9todo de pago": "En efectivo",
+        "fecha": "2024-11-20",
+        "productos": [
+            {
+                "nombre": "Chips de papa 500g",
+                "precio": 800.0,
+                "cantidad": 5
+            }
+        ],
+        "total": 4000.0
+    },
+    {
+        "cliente": "Alejandro",
+        "M\u00e9todo de pago": "Por SINPE M\u00f3vil",
+        "fecha": "2024-11-20",
+        "productos": [
+            {
+                "nombre": "Papas 1Kg",
+                "precio": 1500.0,
+                "cantidad": 3
+            }
+        ],
+        "total": 4500.0
     }
 ]
